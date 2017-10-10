@@ -17,7 +17,6 @@ exports.crawler = () => {
                     price: match[5],
                     'daily-variation': match[6],
                     'monthly-variation': match[7],
-                    date: new Date(),
                 });
             }
         } catch (error) {

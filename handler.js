@@ -1,6 +1,9 @@
 'use strict';
-
+const aws = require('aws-sdk');
 const fr = require('./crawlers/fr-fci');
+const moment = require('moment');
+
+const docClient = new aws.DynamoDB.DocumentClient({ region: 'us-east-1' });
 
 module.exports.hello = (event, context, callback) => {
   const response = {
@@ -19,9 +22,6 @@ module.exports.hello = (event, context, callback) => {
 
 module.exports.crawlFr = (event, context, callback) => {
   fr.crawler().then(result => {
-    console.log('------------crawlFr---------------');
-    console.log(result);
-    console.log('------------/crawlFr---------------');
 
     const response = {
       statusCode: 200,
@@ -30,6 +30,42 @@ module.exports.crawlFr = (event, context, callback) => {
       }),
     };
 
+    const date = moment().format("YYYYMMDD");
+    const dateTime = moment().format();
+
+    for(var i = 0; i< result.length; i++)
+    {
+      const item = result[i];
+      const id= guid();
+
+      item.id = id;
+      item.date = date;
+      item.createdDate = dateTime;
+      item.group = 'fr';
+      const params = {
+        Item: item,
+        TableName: 'fci-history'
+      };
+
+      docClient.put(params, function (err, data) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
     callback(null, response);
-  }).catch(err=>console.log(err));
+  }).catch(err => console.log(err));
 };
+
+
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
+}

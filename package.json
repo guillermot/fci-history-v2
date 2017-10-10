@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "serverless": "1.17.0"
+  },
+  "dependencies": {
+    "moment": "^2.19.0"
   }
 }

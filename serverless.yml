@@ -64,9 +64,10 @@ functions:
   crawl-fr:
     handler: handler.crawlFr
     events:
+      - schedule: cron(0 9 ? * MON-FRI *)
       - http:
-          path: crawl
-          method: get
+           path: crawl
+           method: get
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
