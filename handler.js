@@ -19,6 +19,17 @@ module.exports.hello = (event, context, callback) => {
 
 module.exports.crawlFr = (event, context, callback) => {
   fr.crawler().then(result => {
-    callback(null, result);
-  });
+    console.log('------------crawlFr---------------');
+    console.log(result);
+    console.log('------------/crawlFr---------------');
+
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify({
+        result: result
+      }),
+    };
+
+    callback(null, response);
+  }).catch(err=>console.log(err));
 };

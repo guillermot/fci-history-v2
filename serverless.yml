@@ -61,7 +61,7 @@ functions:
       - http:
           path: users/create
           method: get
-  craw-fr:
+  crawl-fr:
     handler: handler.crawlFr
     events:
       - http:
