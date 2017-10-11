@@ -4,6 +4,21 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "crawler fim debug",
+            // "program": "${workspaceRoot}/node_modules/.bin/sls",
+            "program": "${workspaceRoot}/node_modules/serverless/bin/serverless",
+            "args": [
+                "invoke",
+                "local",
+                "-f",
+                "crawl-fim",
+                "--data",
+                "{}"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "crawler debug",
             // "program": "${workspaceRoot}/node_modules/.bin/sls",
             "program": "${workspaceRoot}/node_modules/serverless/bin/serverless",

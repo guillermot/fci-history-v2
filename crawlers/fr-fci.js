@@ -6,21 +6,17 @@ exports.crawler = () => {
         let regexRows = /(<tr\sclass='tr2'.*?><td.*?><span.*?>(.*?)\s*?\<\/span><\/td\s*?>.*?<td.*?><span.*?>(.*?)\s*?\<\/span><\/td\s*?>.*?<td.*?><span.*?>(.*?)\s*?\<\/span><\/td\s*?>.*?<td.*?><span.*?>(.*?)\s*?\<\/span><\/td\s*?>.*?<td.*?><span.*?>(.*?)\s*?\<\/span><\/td\s*?>.*?<td.*?><span.*?>(.*?)\s*?\<\/span><\/td\s*?>.*?<\/tr>)/g;
         const results = [];
 
-        try {
-            let match;
+        let match;
 
-            while (match = regexRows.exec(html)) {
-                results.push({
-                    fci: match[2],
-                    description : match[3],
-                    currency: match[4],
-                    price: match[5],
-                    'daily-variation': match[6],
-                    'monthly-variation': match[7],
-                });
-            }
-        } catch (error) {
-            console.error(error);
+        while (match = regexRows.exec(html)) {
+            results.push({
+                fci: match[2],
+                description: match[3],
+                currency: match[4],
+                price: match[5],
+                'daily-variation': match[6],
+                'monthly-variation': match[7],
+            });
         }
 
         return results;

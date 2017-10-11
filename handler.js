@@ -1,6 +1,7 @@
 'use strict';
 const aws = require('aws-sdk');
 const fr = require('./crawlers/fr-fci');
+const fim = require('./crawlers/fim-fci')
 const moment = require('moment');
 
 const docClient = new aws.DynamoDB.DocumentClient({ region: 'us-east-1' });
@@ -20,6 +21,12 @@ module.exports.hello = (event, context, callback) => {
   // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 };
 
+module.exports.crawlFim = (event, context, callback) => {
+  fim.crawler().then(result => {
+    console.log(result);
+  }).catch(err => console.log(err));
+};
+
 module.exports.crawlFr = (event, context, callback) => {
   fr.crawler().then(result => {
 
@@ -33,10 +40,9 @@ module.exports.crawlFr = (event, context, callback) => {
     const date = moment().format("YYYYMMDD");
     const dateTime = moment().format();
 
-    for(var i = 0; i< result.length; i++)
-    {
+    for (var i = 0; i < result.length; i++) {
       const item = result[i];
-      const id= guid();
+      const id = guid();
 
       item.id = id;
       item.date = date;
