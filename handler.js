@@ -23,7 +23,16 @@ module.exports.hello = (event, context, callback) => {
 
 module.exports.crawlFim = (event, context, callback) => {
   fim.crawler().then(result => {
-    console.log(result);
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify({
+        result: result
+      }),
+    };
+
+    save(result, 'fim');
+
+    callback(null, response);
   }).catch(err => console.log(err));
 };
 
@@ -37,34 +46,36 @@ module.exports.crawlFr = (event, context, callback) => {
       }),
     };
 
-    const date = moment().format("YYYYMMDD");
-    const dateTime = moment().format();
-
-    for (var i = 0; i < result.length; i++) {
-      const item = result[i];
-      const id = guid();
-
-      item.id = id;
-      item.date = date;
-      item.createdDate = dateTime;
-      item.group = 'fr';
-      const params = {
-        Item: item,
-        TableName: 'fci-history'
-      };
-
-      docClient.put(params, function (err, data) {
-        if (err) {
-          console.log(err);
-        }
-      });
-    }
+    save(result), 'fr';
 
     callback(null, response);
   }).catch(err => console.log(err));
 };
 
+function save(result, group) {
+  const date = moment().format("YYYYMMDD");
+  const dateTime = moment().format();
 
+  for (var i = 0; i < result.length; i++) {
+    const item = result[i];
+    const id = guid();
+
+    item.id = id;
+    item.date = date;
+    item.createdDate = dateTime;
+    item.group = group;
+    const params = {
+      Item: item,
+      TableName: 'fci-history'
+    };
+
+    docClient.put(params, function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+}
 
 function guid() {
   function s4() {

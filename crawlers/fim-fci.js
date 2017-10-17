@@ -1,26 +1,39 @@
 const webRequestPromise = require('./web-request-promise');
+
+var fs = require('fs');
+
 const url = 'http://www.fondosfima.com.ar/personas/herramientas/valor-de-cuotaparte/';
 // [^<]
 // const regex = /(<tr><td.*?>.*?<b.*?>(.*?)<\/b><\/td>.*?<td.*?><img.*?title="(.*?)".*?<\/td>.*?<td.*?>(.*?)<\/td>.*?<td.*?>(.*?)<\/td>.*?<td.*?>.*?<td.*?>(.*?)<\/td>.*?<td.*?><\/tr>)/g;
 //const regex = /(<form.*?>.*?<\/form>)/g;
-const regex = /(<form\sname="frmComp".*?>.*?<\/form>)/g;
 
 module.exports.crawler = () => {
     return webRequestPromise.webRequest(url).then((html) => {
         const results = [];
-        let match;
+        let tableMatch, rowMatch;
 
-        while (match = regex.exec(html)) {
-            const item = {
-                fci: match[2],
-                description: match[2],
-                currency: match[3],
-                price: match[4],
-                'daily-variation': match[5],
-                'monthly-variation': match[6],
-            };
+        html = html.replace(/\r/g, " ");
+        html = html.replace(/\n/g, " ");
+        html = html.replace(/\t/g, " ");
 
-            results.push(item);
+        const tableRegex = /<form\sname="frmComp".*?><table.*?>(.*?)<\/table>.*?<\/form>/img;
+        const rowRegex = /(<tr><td\sclass="fondo".*?>.*?<b.*?>(.*?)<\/b>.*?<\/td>.*?<td.*?>.*?<img.*?title="(.*?)".*?<\/td><td.*?>(.*?)<\/td>.*?<td.*?>(.*?)<\/td>.*?<td.*?><td.*?>(.*?)<\/td>.*?<td.*?(<\/td>|\/>)<\/tr>)/img;
+
+        while (tableMatch = tableRegex.exec(html)) {
+            const rowHtml = tableMatch[1];
+
+            while (rowMatch = rowRegex.exec(rowHtml)) {
+                const item = {
+                    fci: rowMatch[2],
+                    description: rowMatch[2],
+                    currency: rowMatch[3],
+                    price: rowMatch[4],
+                    'daily-variation': rowMatch[5],
+                    'monthly-variation': rowMatch[6],
+                };
+
+                results.push(item);
+            }
         }
 
         return results;
