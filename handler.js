@@ -46,7 +46,7 @@ module.exports.crawlFr = (event, context, callback) => {
       }),
     };
 
-    save(result), 'fr';
+    save(result, 'fr');
 
     callback(null, response);
   }).catch(err => console.log(err));
