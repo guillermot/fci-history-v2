@@ -62,10 +62,12 @@ module.exports.getData = (event, context, callback) => {
   // const group = event.group;
   // const description = event.description;
 
-  const start_date = event['queryStringParameters']['start_date'];
-  const end_date = event['queryStringParameters']['end_date'];
-  const group = event['queryStringParameters']['group'];
-  const description = event['queryStringParameters']['description'];
+  const start_date = event.queryStringParameters['start_date'];
+  const end_date = event.queryStringParameters['end_date'];
+  const group = event.queryStringParameters['group'];
+  const description = event.queryStringParameters['description'];
+
+  console.log(event);
 
   const query = {
     TableName: 'fci-history',
@@ -89,7 +91,7 @@ module.exports.getData = (event, context, callback) => {
     }
     else {
       response.statusCode = 200;
-      response.body = data.Items;
+      response.body = JSON.stringify(data.Items);
     }
 
     callback(null, response);

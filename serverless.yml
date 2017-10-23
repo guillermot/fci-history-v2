@@ -81,6 +81,9 @@ functions:
       - http:
           path: fci
           method: get
+          request:
+            template:
+            application/json: '{ "start_date" : "$input.params(''start_date'')", "end_date" : "$input.params(''end_date'')", "group" : "$input.params(''group'')" }'
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
