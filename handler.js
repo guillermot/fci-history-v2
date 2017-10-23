@@ -21,6 +21,7 @@ module.exports.hello = (event, context, callback) => {
   // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 };
 
+// Crawlers
 module.exports.crawlFim = (event, context, callback) => {
   fim.crawler().then(result => {
     const response = {
@@ -51,6 +52,49 @@ module.exports.crawlFr = (event, context, callback) => {
     callback(null, response);
   }).catch(err => console.log(err));
 };
+
+// API
+module.exports.getData = (event, context, callback) => {
+
+  // For debug purposes
+  // const start_date = event.start_date;
+  // const end_date = event.end_date;
+  // const group = event.group;
+  // const description = event.description;
+
+  const start_date = event['queryStringParameters']['start_date'];
+  const end_date = event['queryStringParameters']['end_date'];
+  const group = event['queryStringParameters']['group'];
+  const description = event['queryStringParameters']['description'];
+
+  const query = {
+    TableName: 'fci-history',
+    FilterExpression: '#group = :group and #date between :start_date and :end_date',
+    ExpressionAttributeNames: {
+      '#date': 'date',
+      '#group': 'group'
+    },
+    ExpressionAttributeValues: {
+      ':start_date': start_date,
+      ':end_date': end_date,
+      ':group': group
+    }
+  };
+
+  docClient.scan(query, (err, data) => {
+    let response = {};
+    if (err) {
+      response.statusCode = 500;
+      response.body = err;
+    }
+    else {
+      response.statusCode = 200;
+      response.body = data.Items;
+    }
+
+    callback(null, response);
+  });
+}
 
 function save(result, group) {
   const date = moment().format("YYYYMMDD");
