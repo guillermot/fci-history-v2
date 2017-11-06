@@ -1,11 +1,9 @@
-const baseUrl = '';
-const getFciData = () =>{
-    return [
-        { name: 'fci-1', 'daily-variation': 2, date: '20171102'},
-        { name: 'fci-2', 'daily-variation': 4, date: '20171103'},
-        { name: 'fci-3', 'daily-variation': 5, date: '20171104'},
-        { name: 'fci-4', 'daily-variation': 6, date: '20171101'}
-    ];
+const baseUrl = 'https://q9cdz9r88k.execute-api.us-east-1.amazonaws.com/dev';
+const getFciData = () => {
+    const url = baseUrl + '/fci?start_date=20171018&end_date=20171020&group=fr';
+
+    return fetch(url)
+        .then(response => response.json());
 };
 
 module.exports.getFciData = getFciData;

@@ -94,6 +94,8 @@ module.exports.getData = (event, context, callback) => {
       response.body = JSON.stringify(data.Items);
     }
 
+    response.headers = { "Access-Control-Allow-Origin": "*" };
+
     callback(null, response);
   });
 }

@@ -8,7 +8,7 @@ const loadData = (container, data) => {
         const newTr = document.importNode(templateContent, true);
         const tds = newTr.querySelectorAll('td');
 
-        tds[0].innerText = item.name;
+        tds[0].innerText = item.description;
         tds[1].innerText = item['daily-variation'];
         tds[2].innerText = item.date;
 
