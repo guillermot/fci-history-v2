@@ -3,7 +3,6 @@ const metadata = require('./form-metadata.js');
 const services = require('../services.js');
 const loadChartjs = require('./chart.js');
 
-const container = document.querySelector('#daily-variation > tbody');
 const startDate = '20171001';
 const endDate = '20171020';
 
