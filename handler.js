@@ -57,17 +57,17 @@ module.exports.crawlFr = (event, context, callback) => {
 module.exports.getData = (event, context, callback) => {
 
   // For debug purposes
-  const start_date = event.start_date;
-  const end_date = event.end_date;
-  const group = event.group;
-  const description = event.description;
-  const fci = event.fci;
+  // const start_date = event.start_date;
+  // const end_date = event.end_date;
+  // const group = event.group;
+  // const description = event.description;
+  // const fci = event.fci;
 
-  // const start_date = event.queryStringParameters['start_date'];
-  // const end_date = event.queryStringParameters['end_date'];
-  // const group = event.queryStringParameters['group'];
-  // const fci = event.queryStringParameters['fci'];
-  // const description = event.queryStringParameters['description'];
+  const start_date = event.queryStringParameters['start_date'];
+  const end_date = event.queryStringParameters['end_date'];
+  const group = event.queryStringParameters['group'];
+  const fci = event.queryStringParameters['fci'];
+  const description = event.queryStringParameters['description'];
 
   const query = {
     TableName: 'fci-history',

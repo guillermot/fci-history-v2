@@ -1,5 +1,5 @@
 module.exports = {
-    "port": 8000,
+    "port": 8084,
     "files": ["./**/*"],
     "server": { "baseDir": "./" }
   }
