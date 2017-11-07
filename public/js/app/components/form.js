@@ -1,7 +1,6 @@
 const moment = require('moment');
 const metadata = require('./form-metadata.js');
 const services = require('../services.js');
-const dailyVariation = require('./daily-variation-tr.js');
 const loadChartjs = require('./chart.js');
 
 const container = document.querySelector('#daily-variation > tbody');
