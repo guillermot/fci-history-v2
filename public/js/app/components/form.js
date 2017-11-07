@@ -29,7 +29,6 @@ const loadData = (params) => {
                 return a.date - b.date;
             });
 
-            dailyVariation.loadData(container, result);
             loadChartjs.loadChart(result);
         }).catch(err => {
             console.log(err);
