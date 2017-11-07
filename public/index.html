@@ -35,31 +35,10 @@
         </tr>
     </template>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="dist/bundle.js"></script>
 
 
-    <script>
-        var ctx = document.getElementById("canvas").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'polarArea',
-            data: {
-                labels: ["M", "T", "W", "T", "F", "S", "S"],
-                datasets: [{
-                    backgroundColor: [
-                        "#2ecc71",
-                        "#3498db",
-                        "#95a5a6",
-                        "#9b59b6",
-                        "#f1c40f",
-                        "#e74c3c",
-                        "#34495e"
-                    ],
-                    data: [12, 19, 3, 17, 28, 24, 7]
-                }]
-            }
-        });
-    </script>
 </body>
 
 </html>

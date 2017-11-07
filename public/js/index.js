@@ -6,7 +6,7 @@ const container = document.querySelector('#daily-variation > tbody');
 services.getFciData()
     .then(result => {
         dailyVariation.loadData(container, result);
-        //loadChartjs.loadChart(result);
+        loadChartjs.loadChart(result);
     }).catch(err => {
         console.log(err);
     });

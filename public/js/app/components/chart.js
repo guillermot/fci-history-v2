@@ -19,7 +19,7 @@ const loadChart = function (results) {
         labels.push(item.date);
         values.push(item['daily-variation']);
     }
-
+    
     var config = {
         type: 'line',
         data: {

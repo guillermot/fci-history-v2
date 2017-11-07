@@ -57,28 +57,30 @@ module.exports.crawlFr = (event, context, callback) => {
 module.exports.getData = (event, context, callback) => {
 
   // For debug purposes
-  // const start_date = event.start_date;
-  // const end_date = event.end_date;
-  // const group = event.group;
-  // const description = event.description;
+  const start_date = event.start_date;
+  const end_date = event.end_date;
+  const group = event.group;
+  const description = event.description;
+  const fci = event.fci;
 
-  const start_date = event.queryStringParameters['start_date'];
-  const end_date = event.queryStringParameters['end_date'];
-  const group = event.queryStringParameters['group'];
-  const description = event.queryStringParameters['description'];
-
-  console.log(event);
+  // const start_date = event.queryStringParameters['start_date'];
+  // const end_date = event.queryStringParameters['end_date'];
+  // const group = event.queryStringParameters['group'];
+  // const fci = event.queryStringParameters['fci'];
+  // const description = event.queryStringParameters['description'];
 
   const query = {
     TableName: 'fci-history',
-    FilterExpression: '#group = :group and #date between :start_date and :end_date',
+    FilterExpression: '#group = :group and #date between :start_date and :end_date and #fci = :fci',
     ExpressionAttributeNames: {
       '#date': 'date',
+      '#fci': 'fci',
       '#group': 'group'
     },
     ExpressionAttributeValues: {
       ':start_date': start_date,
       ':end_date': end_date,
+      ':fci': fci,
       ':group': group
     }
   };
