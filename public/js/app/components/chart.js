@@ -1,40 +1,56 @@
-const chartColors = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
-};
+const chartColors = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)'
+];
 
+const loadChart = function (results, fcis) {
 
-const loadChart = function (results) {
-    const labels = [];
-    const values = [];
+    const datasets = [];
+    const referencesLabels = [];
 
-    for (var i = 0; i < results.length; i++) {
-        var item = results[i];
+    for (let i = 0; i < fcis.length; i++) {
+        const values = [];
+        let title = '';
 
-        labels.push(item.date);
-        values.push(Number(item['daily-variation']));
+        const fci = fcis[i];
+        const fciResults = results.filter(e => e.fci == fci);
+
+        for (let j = 0; j < fciResults.length; j++) {
+            const item = fciResults[j];
+            if (j == 0) {
+                title = item.description;
+            }
+            
+            values.push(Number(item['daily-variation']));
+
+            const found = referencesLabels.find(e => e == item.date);
+            if(!found)
+                referencesLabels.push(item.date);
+        }
+
+        const dataset = {
+            label: title,
+            backgroundColor: chartColors[i],
+            borderColor: chartColors[i],
+            data: values,
+            fill: false,
+        };
+
+        datasets.push(dataset);
     }
-
-    debugger;
 
     if (!window.myLine) {
         var ctx = document.getElementById("canvas").getContext("2d");
         var config = {
             type: 'line',
             data: {
-                labels: labels,
-                datasets: [{
-                    label: "My First dataset",
-                    backgroundColor: chartColors.red,
-                    borderColor: chartColors.red,
-                    data: values,
-                    fill: false,
-                }]
+                labels: referencesLabels,
+                datasets: datasets
             },
             options: {
                 responsive: true,

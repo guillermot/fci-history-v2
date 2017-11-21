@@ -66,21 +66,18 @@ module.exports.getData = (event, context, callback) => {
   const start_date = event.queryStringParameters['start_date'];
   const end_date = event.queryStringParameters['end_date'];
   const group = event.queryStringParameters['group'];
-  const fci = event.queryStringParameters['fci'];
   const description = event.queryStringParameters['description'];
 
   const query = {
     TableName: 'fci-history',
-    FilterExpression: '#group = :group and #date between :start_date and :end_date and #fci = :fci',
+    FilterExpression: '#group = :group and #date between :start_date and :end_date',
     ExpressionAttributeNames: {
       '#date': 'date',
-      '#fci': 'fci',
       '#group': 'group'
     },
     ExpressionAttributeValues: {
       ':start_date': start_date,
       ':end_date': end_date,
-      ':fci': fci,
       ':group': group
     }
   };
