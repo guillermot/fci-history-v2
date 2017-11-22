@@ -1,7 +1,7 @@
 const moment = require('moment');
 const metadata = require('./form-metadata.js');
 const services = require('../services.js');
-const loadChartjs = require('./chart.js');
+const chartjs = require('./chart.js');
 
 const startDate = '20171001';
 const endDate = '20171020';
@@ -36,7 +36,7 @@ const loadData = (params) => {
 
             window.lastResults = result;
 
-            loadChartjs.loadChart(result, params.fcis);
+            chartjs.loadChart(result, params.fcis);
         }).catch(err => {
             console.log(err);
         });
@@ -76,11 +76,13 @@ const loadCheckBoxes = (container, obj) => {
             if (target.checked) {
                 const data = window.lastResults;
                 const fci = target.value;
-                const results = data.filter(e=>e.fci == fci);
-                const dataset = {
+                const results = data.filter(e => e.fci == fci);
 
-                };
-
+                chartjs.addDataset(results);
+            }
+            else {
+                const fci = target.value;
+                chartjs.removeDataset(fci);
             }
         });
     }
