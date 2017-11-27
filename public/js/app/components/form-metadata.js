@@ -16,7 +16,9 @@ const fcis = {
         'FBA RMixtA': 'FBA RENTA MIXTA',
         'FBA CalifA': 'FBA  CALIFICADO',
         'FBA AccArA': 'FBA ACCIONESARGENTINA',
-        'FBA AccLA': 'FBA ACCIONES LATINOAMERICANAS'
+        'FBA AccLA': 'FBA ACCIONES LATINOAMERICANAS',
+        'FBA ReTo2A': 'FBA RETORNO TOTAL II',
+        'FBA BoLatA': 'FBA BONOS LATAM',
     },
     'gal':
     {
