@@ -4,6 +4,9 @@ const fr = require('./crawlers/fr-fci');
 const fim = require('./crawlers/fim-fci')
 const moment = require('moment');
 
+
+
+
 const docClient = new aws.DynamoDB.DocumentClient({ region: 'us-east-1' });
 
 module.exports.hello = (event, context, callback) => {
